@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,63 +10,65 @@
         /* --- General Style --- */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5; 
+            background-color: #f0f2f5;
             color: #333;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding: 3px 20px 10px 20px; 
+            padding: 3px 20px 10px 20px;
             box-sizing: border-box;
             overflow-x: hidden;
-            font-size: 0.8em; 
+            font-size: 0.8em;
         }
 
         .main-content-wrapper {
             display: flex;
-            gap: 15px; 
+            gap: 15px;
             width: 100%;
             align-items: flex-start;
-            min-height: calc(100vh - 13px); 
+            min-height: calc(100vh - 13px);
             /* Rendre le wrapper cliquable pour la pause */
-            cursor: pointer; 
+            cursor: pointer;
+            position: relative;
+            /* Ensure absolute positioning works for children */
         }
 
         /* --- Screens Styles --- */
         .overlay-screen {
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             /* Rendu opaque: Fond blanc-cassé */
-            background-color: #f0f2f5; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 100; 
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
             /* *** AUCUN BACKDROP-FILTER OU FILTRE BLEU ICI *** */
-            text-align: center; 
-            padding: 20px; 
+            text-align: center;
+            padding: 20px;
             box-sizing: border-box;
             transition: opacity 0.3s, visibility 0.3s;
         }
 
         .screen-content {
-            background-color: rgba(255,255,255,0.9); 
-            padding: 15px 20px; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
-            max-width: 800px; 
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
             width: 100%;
             text-align: left;
-            max-height: 90vh; 
-            overflow-y: auto; 
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .screen-title {
-            color: #1e3a5f; 
-            font-size: 1.5em; 
+            color: #1e3a5f;
+            font-size: 1.5em;
             margin-bottom: 25px;
             text-align: center;
         }
@@ -81,6 +84,7 @@
             margin-top: 20px;
             transition: background-color 0.3s;
         }
+
         .next-btn:hover {
             background-color: #224abe;
         }
@@ -90,6 +94,7 @@
             max-width: 400px;
             text-align: center;
         }
+
         #language-select {
             padding: 10px;
             font-size: 1.1em;
@@ -134,14 +139,16 @@
             cursor: pointer;
             width: 100%;
         }
-        
+
         /* NOUVEAU: Style pour les points dans la section 2 */
         .competition-points-display {
             font-size: 0.85em;
             font-weight: bold;
-            color: #007bff; /* Bleu pour attirer l'oeil */
+            color: #007bff;
+            /* Bleu pour attirer l'oeil */
             margin-left: 8px;
-            display: none; /* Caché par défaut */
+            display: none;
+            /* Caché par défaut */
         }
 
         .edition-controls {
@@ -176,21 +183,34 @@
 
         /* --- Left Column: Competitions and Year --- */
         .competitions-column {
-            width: 110px; 
+            width: 220px;
+            max-width: 35vw;
             flex-shrink: 0;
-            padding-top: 3px; 
+            padding-top: 3px;
             display: flex;
             flex-direction: column;
-            min-height: calc(100vh - 13px - 3px); 
+            min-height: auto;
+            /* Remove full height requirement */
+            position: absolute;
+            /* Overlay */
+            left: 65%;
+            top: 12.2%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background-color: rgba(240, 242, 245, 0.8);
+            /* Semi-transparent background matching body */
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
         }
 
         #year-display-in-column {
-            font-size: 1.725em; 
+            font-size: 1.725em;
             color: #1e3a5f;
-            margin: 0 0 0 0; 
+            margin: 0 0 0 0;
             font-weight: 800;
             text-align: center;
-            line-height: 1; 
+            line-height: 1;
         }
 
         /* Style pour l'indicateur de pause */
@@ -200,23 +220,24 @@
             color: #ff0000;
             text-align: center;
             margin: 3px 0 5px 0;
-            display: none; /* Caché par défaut */
+            display: none;
+            /* Caché par défaut */
         }
 
         .competitions-display {
             display: flex;
-            flex-direction: column; 
-            gap: 6px; 
-            max-height: 100vh; 
-            flex-grow: 1; 
-            overflow: hidden; 
+            flex-direction: column;
+            gap: 6px;
+            max-height: 100vh;
+            flex-grow: 1;
+            overflow: hidden;
             align-items: flex-start;
-            position: relative; 
+            position: relative;
         }
 
         #all-competitions-scroll-container {
             position: relative;
-            top: 0; 
+            top: 0;
             left: 0;
             width: 100%;
             display: flex;
@@ -225,22 +246,22 @@
 
         /* Container for competitions of a year */
         .year-group-container {
-            position: relative; 
+            position: relative;
             width: 100%;
-            margin-bottom: 6px; 
-            flex-shrink: 0; 
+            margin-bottom: 6px;
+            flex-shrink: 0;
         }
 
         /* --- Style : Year Separator --- */
         .year-separator {
             width: 100%;
-            height: 20px; 
+            height: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 3px 0; 
+            margin: 3px 0;
             position: relative;
-            flex-shrink: 0; 
+            flex-shrink: 0;
         }
 
         .year-separator::before,
@@ -261,16 +282,16 @@
 
         /* --- COMPETITION BOX STRUCTURE --- */
         .competition-box {
-            position: relative; 
+            position: relative;
             width: 100%;
-            height: 38px; 
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-            border-radius: 3px; 
-            overflow: hidden; 
+            height: 38px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
             transition: transform 0.2s ease;
-            display: flex; 
-            margin-bottom: 6px; 
-            flex-shrink: 0; 
+            display: flex;
+            margin-bottom: 6px;
+            flex-shrink: 0;
         }
 
         .year-group-container .competition-box:last-child {
@@ -278,16 +299,16 @@
         }
 
         .competition-box:hover {
-            transform: scale(1.03); 
+            transform: scale(1.03);
             z-index: 5;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
         }
 
         /* --- Internal Columns --- */
         #flag-column {
-            width: 35%; 
+            width: 35%;
             flex-shrink: 0;
-            background-color: #000; 
+            background-color: #000;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -298,32 +319,36 @@
         #flag-column img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
-            padding: 0; 
+            object-fit: cover;
+            padding: 0;
         }
 
         #right-column {
-            width: 65%; 
+            width: 65%;
             flex-grow: 1;
             display: flex;
-            flex-direction: column; 
+            flex-direction: column;
             height: 100%;
         }
 
         #comp-info-case {
-            height: 50%; 
+            height: 50%;
             display: flex;
-            flex-direction: column; /* MODIFIÉ: Garder en colonne */
+            flex-direction: column;
+            /* MODIFIÉ: Garder en colonne */
             align-items: center;
             justify-content: center;
-            font-size: 0.7em; /* MODIFIÉ: Augmenté */
+            font-size: 0.7em;
+            /* MODIFIÉ: Augmenté */
             font-weight: bold;
             color: #fff;
-            padding: 0 3px; /* MODIFIÉ: Ajout de padding */
+            padding: 0 3px;
+            /* MODIFIÉ: Ajout de padding */
             text-align: center;
-            line-height: 1; /* MODIFIÉ: Rapprocher les lignes */
+            line-height: 1;
+            /* MODIFIÉ: Rapprocher les lignes */
         }
-        
+
         /* NOUVEAU: Pour forcer le nom de la comp sur 1 ligne */
         .comp-name-line {
             display: block;
@@ -334,129 +359,158 @@
         }
 
         #winner-name-case {
-            height: 50%; 
-            background-color: #000; 
-            color: #ccc; 
-            font-size: 0.6em; 
-            font-weight: 600; 
+            height: 50%;
+            background-color: #000;
+            color: #ccc;
+            font-size: 0.6em;
+            font-weight: 600;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 0 1px; 
+            padding: 0 1px;
             text-align: center;
-            line-height: 1.1; 
+            line-height: 1.1;
         }
 
         /* --- RANKING BASE STYLES --- */
-        .no-competitions { font-size: 0.7em; margin-top: 5px; }
-        .chart-container { 
-            flex-grow: 1; 
-            max-width: 600px; 
-            flex-shrink: 0; 
+        .no-competitions {
+            font-size: 0.7em;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            flex-grow: 1;
+            width: 100%;
+            /* Full width */
+            flex-shrink: 0;
             padding-top: 0;
-            position: relative; 
+            position: relative;
         }
-        
-        #ranking-chart { 
-            position: relative; 
-            width: 100%; 
-            z-index: 2; 
+
+        #ranking-chart {
+            position: relative;
+            width: 100%;
+            z-index: 2;
         }
-        
+
         /* MODIFIÉ: Conteneur pour les pastilles de barème */
         #background-pills-container {
             position: absolute;
             bottom: 10px;
             left: 0;
             width: 100%;
-            z-index: 1; /* Derrière le classement */
+            z-index: 1;
+            /* Derrière le classement */
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 5px; /* MODIFIÉ */
-            opacity: 0.2; /* MODIFIÉ: Effet plus effacé */
-            pointer-events: none; /* Ne pas bloquer les clics */
+            gap: 5px;
+            /* MODIFIÉ */
+            opacity: 0.2;
+            /* MODIFIÉ: Effet plus effacé */
+            pointer-events: none;
+            /* Ne pas bloquer les clics */
             overflow: hidden;
-            max-height: 100px; /* MODIFIÉ: Plus de place */
-            filter: blur(0.5px); /* MODIFIÉ: Effet effacé */
+            max-height: 100px;
+            /* MODIFIÉ: Plus de place */
+            filter: blur(0.5px);
+            /* MODIFIÉ: Effet effacé */
         }
 
         /* MODIFIÉ: Style des pastilles */
         .point-pill {
-            padding: 2px; /* MODIFIÉ */
-            border-radius: 50%; /* MODIFIÉ: Circulaire */
+            padding: 2px;
+            /* MODIFIÉ */
+            border-radius: 50%;
+            /* MODIFIÉ: Circulaire */
             font-weight: bold;
             color: #fff;
-            display: flex; /* MODIFIÉ */
-            align-items: center; /* MODIFIÉ */
-            justify-content: center; /* MODIFIÉ */
-            text-align: center; /* MODIFIÉ */
-            line-height: 1.1; /* MODIFIÉ */
-            box-sizing: border-box; /* MODIFIÉ */
-            flex-shrink: 0; /* MODIFIÉ */
+            display: flex;
+            /* MODIFIÉ */
+            align-items: center;
+            /* MODIFIÉ */
+            justify-content: center;
+            /* MODIFIÉ */
+            text-align: center;
+            /* MODIFIÉ */
+            line-height: 1.1;
+            /* MODIFIÉ */
+            box-sizing: border-box;
+            /* MODIFIÉ */
+            flex-shrink: 0;
+            /* MODIFIÉ */
         }
 
         .country-row {
             position: absolute;
             width: 100%;
-            height: 35px; 
+            height: 35px;
             display: flex;
             align-items: center;
-            margin-bottom: 5px; 
-            opacity: 0; 
-            visibility: hidden; 
-            background-color: transparent; 
-            border-radius: 0; 
-            padding-right: 8px; 
+            margin-bottom: 5px;
+            opacity: 0;
+            visibility: hidden;
+            background-color: transparent;
+            border-radius: 0;
+            padding-right: 8px;
         }
 
-        .country-info { position: relative; width: 100%; display: flex; align-items: center; }
+        .country-info {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
 
         /* Styles pour les pays */
-        .country-name { 
-            position: absolute; 
-            top: 0px; 
-            left: 40px; 
-            font-size: 0.7em; 
-            font-weight: bold; 
-            color: #444; 
-            white-space: nowrap; 
+        .country-name {
+            position: absolute;
+            top: 0px;
+            left: 40px;
+            font-size: 0.7em;
+            font-weight: bold;
+            color: #444;
+            white-space: nowrap;
         }
-        .flag { 
-            width: 35px; 
-            height: 35px; 
-            border-radius: 50%; 
-            border: 2px solid #fff; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
-            margin-right: 1px; 
-            flex-shrink: 0; 
-            object-fit: cover; 
-            background-color: #eee; 
+
+        .flag {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            margin-right: 1px;
+            flex-shrink: 0;
+            object-fit: cover;
+            background-color: #eee;
         }
-        .progress-container { 
-            flex-grow: 1; 
-            height: 6px; 
-            background-color: transparent; 
-            border-radius: 3px; 
-            overflow: hidden; 
-            margin-top: 15px; 
+
+        .progress-container {
+            flex-grow: 1;
+            height: 6px;
+            background-color: transparent;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 15px;
         }
-        .progress-bar { 
-            width: 0%; 
-            height: 100%; 
-            border-radius: 3px; 
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            border-radius: 3px;
         }
-        .trophy-count { 
-            font-size: 1.1em; 
-            font-weight: bold; 
-            color: #1e3a5f; 
-            margin-left: 10px; 
-            width: 40px; 
-            text-align: center; 
-            flex-shrink: 0; 
-            transition: width 0.3s, font-size 0.3s; 
+
+        .trophy-count {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #1e3a5f;
+            margin-left: 10px;
+            width: 40px;
+            text-align: center;
+            flex-shrink: 0;
+            transition: width 0.3s, font-size 0.3s;
         }
 
         /* --- Region Specific Styles (Identique aux pays) --- */
@@ -468,49 +522,64 @@
         }
 
         .country-row.is-region .country-name {
-            position: absolute; 
-            top: 0px;          
-            left: 40px;        
-            font-size: 0.7em;  
-            color: #444;       
+            position: absolute;
+            top: 0px;
+            left: 40px;
+            font-size: 0.7em;
+            color: #444;
             font-weight: bold;
             white-space: nowrap;
         }
 
         .country-row.is-region .flag {
-            width: 35px; 
-            height: 35px; 
-            border-radius: 50%; 
-            border: 2px solid #fff; 
-            box-shadow: 0 1px 3px rgba(0,0,0,0.15); 
-            flex-shrink: 0; 
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            flex-shrink: 0;
         }
 
         /* Couleurs spécifiques aux régions */
-        .country-row.is-region .flag[data-region-code="AN"] { background-color: #36454F; }
-        .country-row.is-region .flag[data-region-code="AO"] { background-color: #FFA500; }
-        .country-row.is-region .flag[data-region-code="AE"] { background-color: #008000; }
-        .country-row.is-region .flag[data-region-code="AC"] { background-color: #FF0000; }
-        .country-row.is-region .flag[data-region-code="AA"] { background-color: #0000FF; }
+        .country-row.is-region .flag[data-region-code="AN"] {
+            background-color: #36454F;
+        }
+
+        .country-row.is-region .flag[data-region-code="AO"] {
+            background-color: #FFA500;
+        }
+
+        .country-row.is-region .flag[data-region-code="AE"] {
+            background-color: #008000;
+        }
+
+        .country-row.is-region .flag[data-region-code="AC"] {
+            background-color: #FF0000;
+        }
+
+        .country-row.is-region .flag[data-region-code="AA"] {
+            background-color: #0000FF;
+        }
 
         .country-row.is-region .progress-container {
             flex-grow: 1;
-            height: 6px; 
-            background-color: transparent; 
-            margin-top: 15px; 
-            margin-left: 0; 
-            margin-right: 0; 
+            height: 6px;
+            background-color: transparent;
+            margin-top: 15px;
+            margin-left: 0;
+            margin-right: 0;
             border-radius: 3px;
         }
 
         .country-row.is-region .trophy-count {
-            color: #1e3a5f; 
+            color: #1e3a5f;
             font-size: 1.1em;
-            margin-left: 10px; 
+            margin-left: 10px;
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
 
     <div id="language-screen" class="overlay-screen">
@@ -522,15 +591,22 @@
                 <option value="en" selected>English</option>
                 <option value="es">Español</option>
             </select>
-            <button class="next-btn" data-lang-key="select_language_button" onclick="showIntroScreen()">Continue</button>
+            <button class="next-btn" data-lang-key="select_language_button"
+                onclick="showIntroScreen()">Continue</button>
         </div>
     </div>
 
     <div id="start-screen" class="overlay-screen" style="visibility: hidden; opacity: 0; display: none;">
         <div class="intro-screen-content">
             <h1 data-lang-key="welcome_title">🏆 CAF All-Time Trophy Ranking</h1>
-            <p data-lang-key="welcome_instruction">Click to set up the region, competition, and year filters before launching the animation.</p>
-            <button class="next-btn" data-lang-key="welcome_button" onclick="showFilterScreen()">Start Configuration</button>
+            <p data-lang-key="welcome_instruction">Click to set up the region, competition, and year filters before
+                launching the animation.</p>
+            <button class="next-btn" data-lang-key="welcome_button" onclick="showFilterScreen()">Start
+                Configuration</button>
+            <div style="margin-top: 15px;">
+                <a href="datacaf.html" style="color: #4e73df; text-decoration: none; font-size: 0.9em;"
+                    data-lang-key="data_editor_link">Data Editor</a>
+            </div>
         </div>
     </div>
 
@@ -540,23 +616,28 @@
 
             <div class="filter-section">
                 <h3 data-lang-key="filter_region_title">1. Filter by CAF Region</h3>
-                <p style="font-size: 0.75em; color: #777; margin-bottom: 10px;" data-lang-key="filter_region_instruction">Select the regions whose countries will be included in the ranking.</p>
+                <p style="font-size: 0.75em; color: #777; margin-bottom: 10px;"
+                    data-lang-key="filter_region_instruction">Select the regions whose countries will be included in the
+                    ranking.</p>
                 <div class="filter-grid" id="region-filters">
-                    </div>
+                </div>
 
                 <hr style="margin: 15px 0;">
 
                 <div class="filter-item" style="justify-content: center;">
                     <input type="checkbox" id="displayRegionRankCheckbox">
-                    <label for="displayRegionRankCheckbox" style="font-weight: bold; color: #007bff;" data-lang-key="filter_region_rank_label">Display Region Ranking (Country Accumulation)</label>
+                    <label for="displayRegionRankCheckbox" style="font-weight: bold; color: #007bff;"
+                        data-lang-key="filter_region_rank_label">Display Region Ranking (Country Accumulation)</label>
                 </div>
             </div>
 
             <div class="filter-section">
                 <h3 data-lang-key="filter_competition_title">2. Filter by Competition</h3>
-                <p style="font-size: 0.75em; color: #777; margin-bottom: 10px;" data-lang-key="filter_competition_instruction">Select the trophies that will be counted (Clubs and National Teams).</p>
+                <p style="font-size: 0.75em; color: #777; margin-bottom: 10px;"
+                    data-lang-key="filter_competition_instruction">Select the trophies that will be counted (Clubs and
+                    National Teams).</p>
                 <div class="filter-grid" id="competition-filters">
-                    </div>
+                </div>
             </div>
 
             <div class="filter-section">
@@ -572,18 +653,19 @@
                     </div>
                 </div>
             </div>
-            
+
             <div style="text-align: center;">
-                <button class="next-btn" data-lang-key="filter_start_button" onclick="launchRankingFromFilter()">Launch Ranking Animation</button>
+                <button class="next-btn" data-lang-key="filter_start_button" onclick="launchRankingFromFilter()">Launch
+                    Ranking Animation</button>
             </div>
         </div>
     </div>
 
-    <div class="main-content-wrapper" id="main-content-wrapper"> 
+    <div class="main-content-wrapper" id="main-content-wrapper">
 
         <div class="competitions-column">
-            <h2 id="year-display-in-column">1956</h2> 
-            <p id="pause-indicator" data-lang-key="paused_label">PAUSE</p> 
+            <h2 id="year-display-in-column">1956</h2>
+            <p id="pause-indicator" data-lang-key="paused_label">PAUSE</p>
             <div id="competitions-display" class="competitions-display">
                 <p class="no-competitions" data-lang-key="loading_data">Loading data...</p>
             </div>
@@ -591,9 +673,9 @@
 
         <div class="chart-container">
             <div id="background-pills-container"></div>
-            
+
             <div id="ranking-chart">
-                </div>
+            </div>
         </div>
 
     </div>
@@ -613,6 +695,7 @@
                     'welcome_title': '🏆 Classement Historique des Trophées CAF',
                     'welcome_instruction': 'Cliquez pour configurer les filtres de région, de compétition et d\'année avant de lancer l\'animation.',
                     'welcome_button': 'Commencer la configuration',
+                    'data_editor_link': 'Accéder à l\'Éditeur de Données',
                     // Filter Screen
                     'filter_title': 'Filtrer les Trophées CAF',
                     'filter_region_title': '1. Filtrer par Région CAF',
@@ -640,6 +723,7 @@
                     'welcome_title': '🏆 CAF All-Time Trophy Ranking',
                     'welcome_instruction': 'Click to set up the region, competition, and year filters before launching the animation.',
                     'welcome_button': 'Start Configuration',
+                    'data_editor_link': 'Access Data Editor',
                     // Filter Screen
                     'filter_title': 'Filter CAF Trophies',
                     'filter_region_title': '1. Filter by CAF Region',
@@ -667,6 +751,7 @@
                     'welcome_title': '🏆 Clasificación Histórica de Trofeos CAF',
                     'welcome_instruction': 'Haga clic para configurar los filtros de región, competición y año antes de iniciar la animación.',
                     'welcome_button': 'Empezar la Configuración',
+                    'data_editor_link': 'Acceder al Editor de Datos',
                     // Filter Screen
                     'filter_title': 'Filtrar Trofeos CAF',
                     'filter_region_title': '1. Filtrar por Región CAF',
@@ -697,22 +782,22 @@
                         // Pour les champs de formulaire (label, button)
                         if (element.tagName === 'BUTTON' || element.tagName === 'LABEL') {
                             element.textContent = translations[lang][key];
-                        } else if (element.tagName === 'H1' || element.tagName === 'H3' || element.tagName === 'P') {
+                        } else if (element.tagName === 'H1' || element.tagName === 'H3' || element.tagName === 'P' || element.tagName === 'A') {
                             element.textContent = translations[lang][key];
                         } else if (element.tagName === 'LABEL' && element.htmlFor && element.htmlFor.includes('YearSelect')) {
-                             element.textContent = translations[lang][key];
+                            element.textContent = translations[lang][key];
                         } else if (element.id === 'pause-indicator') { // utilisation de pause-indicator
-                             element.textContent = translations[lang][key];
+                            element.textContent = translations[lang][key];
                         }
                     }
                 });
                 // Mettre à jour les labels des filtres de région/compétition si déjà affichés
-                if(regionFiltersDiv.children.length > 0) {
-                     initFilterElements(false); 
+                if (regionFiltersDiv.children.length > 0) {
+                    initFilterElements(false);
                 }
 
                 // Mettre à jour l'affichage "Aucun événement filtré" si présent
-                if(competitionsDisplayContainer.querySelector('.no-competitions')) {
+                if (competitionsDisplayContainer.querySelector('.no-competitions')) {
                     competitionsDisplayContainer.querySelector('.no-competitions').textContent = translations[lang].loading_data;
                 }
 
@@ -721,105 +806,105 @@
 
             // --- CONFIGURATION ---
             const JSON_FILE_PATH = 'data_caf.json';
-            const BASE_SECONDS_PER_YEAR = 1; 
-            const SLOWDOWN_PER_COMPETITION = 0.5; 
-            const COMPETITION_THRESHOLD = 2; 
-            const ROW_HEIGHT = 38; 
+            const BASE_SECONDS_PER_YEAR = .3;
+            const SLOWDOWN_PER_COMPETITION = 0.2;
+            const COMPETITION_THRESHOLD = 2;
+            const ROW_HEIGHT = 38;
             const COMP_BOX_HEIGHT = 38;
             const COMP_BOX_GAP = 6;
-            const SEPARATOR_HEIGHT = 26; 
+            const SEPARATOR_HEIGHT = 26;
 
             // COMPETITION COLORS
             const COMPETITION_COLORS = [
                 '#1e3a5f', '#991b1b', '#15803d', '#92400e', '#4c1d95'
             ];
-            let competitionColorMap = {}; 
+            let competitionColorMap = {};
             let colorIndex = 0;
 
             // --- DOM ELEMENTS ---
             const chart = document.getElementById('ranking-chart');
-            const yearDisplay = document.getElementById('year-display-in-column'); 
-            const competitionsDisplayContainer = document.getElementById('competitions-display'); 
+            const yearDisplay = document.getElementById('year-display-in-column');
+            const competitionsDisplayContainer = document.getElementById('competitions-display');
             const regionFiltersDiv = document.getElementById('region-filters');
             const competitionFiltersDiv = document.getElementById('competition-filters');
             const startYearSelect = document.getElementById('startYearSelect');
             const endYearSelect = document.getElementById('endYearSelect');
-            const displayRegionRankCheckbox = document.getElementById('displayRegionRankCheckbox'); 
+            const displayRegionRankCheckbox = document.getElementById('displayRegionRankCheckbox');
             const languageSelect = document.getElementById('language-select');
-            const mainContentWrapper = document.getElementById('main-content-wrapper'); 
-            const pauseIndicator = document.getElementById('pause-indicator'); 
+            const mainContentWrapper = document.getElementById('main-content-wrapper');
+            const pauseIndicator = document.getElementById('pause-indicator');
             const backgroundPillsContainer = document.getElementById('background-pills-container'); // NOUVEAU
 
             let allCompetitionsContainer = null;
 
             // --- GLOBAL ANIMATION STATE ---
             let allCountries = {};
-            let allRegions = {}; 
+            let allRegions = {};
             let yearlyWins = {};
-            let rawYearlyData = {}; 
+            let rawYearlyData = {};
             let sortedYears = [];
-            let timer = null; 
+            let timer = null;
             let yearIndex = 0; // Index de l'année en cours dans filteredYears
             let filteredYears = []; // Les années filtrées
-            let isPaused = false; 
+            let isPaused = false;
 
             // --- FILTER STATE ---
             let startYear = 1957;
             let endYear = 2025;
             let selectedRegions = new Set();
             let selectedCompetitions = new Set();
-            let displayRegionRank = false; 
+            let displayRegionRank = false;
 
 
             // --- CAF REGION MAPPING ---
             const regions = {
-                'Afrique du Nord': { countries: ['EGYPTE', 'MAROC', 'ALGERIE', 'TUNISIE', 'LIBYE'], flagCode: 'AN', isRegion: true, color: '#36454F', nameShort: 'NORD' }, 
-                'Afrique de l\'Ouest': { countries: ['GHANA', 'COTE IVOIRE', 'NIGERIA', 'GAMBIE', 'GUINEE CONAKRY', 'MALI', 'SENEGAL', 'BURKINA FASO'], flagCode: 'AO', isRegion: true, color: '#FFA500', nameShort: 'OUEST' }, 
-                'Afrique de l\'Est': { countries: ['ETHIOPIE', 'SOUDAN', 'KENYA'], flagCode: 'AE', isRegion: true, color: '#008000', nameShort: 'EST' }, 
-                'Afrique Centrale': { countries: ['CAMEROUN', 'RD CONGO', 'CONGO BRAZA', 'GABON', 'GUINEE EQUATORIALE'], flagCode: 'AC', isRegion: true, color: '#FF0000', nameShort: 'CENTRALE' }, 
-                'Afrique Australe': { countries: ['ZAMBIE', 'AFS', 'ANGOLA', 'MADAGASCAR'], flagCode: 'AA', isRegion: true, color: '#0000FF', nameShort: 'AUSTRALE' } 
+                'Afrique du Nord': { countries: ['EGYPTE', 'MAROC', 'ALGERIE', 'TUNISIE', 'LIBYE'], flagCode: 'AN', isRegion: true, color: '#36454F', nameShort: 'NORD' },
+                'Afrique de l\'Ouest': { countries: ['GHANA', 'COTE IVOIRE', 'NIGERIA', 'GAMBIE', 'GUINEE CONAKRY', 'MALI', 'SENEGAL', 'BURKINA FASO'], flagCode: 'AO', isRegion: true, color: '#FFA500', nameShort: 'OUEST' },
+                'Afrique de l\'Est': { countries: ['ETHIOPIE', 'SOUDAN', 'KENYA'], flagCode: 'AE', isRegion: true, color: '#008000', nameShort: 'EST' },
+                'Afrique Centrale': { countries: ['CAMEROUN', 'RD CONGO', 'CONGO BRAZA', 'GABON', 'GUINEE EQUATORIALE'], flagCode: 'AC', isRegion: true, color: '#FF0000', nameShort: 'CENTRALE' },
+                'Afrique Australe': { countries: ['ZAMBIE', 'AFS', 'ANGOLA', 'MADAGASCAR'], flagCode: 'AA', isRegion: true, color: '#0000FF', nameShort: 'AUSTRALE' }
             };
 
             // Initialiser allRegions
             for (const regionName in regions) {
-                allRegions[regionName] = { 
-                    key: regionName, 
-                    name: regions[regionName].nameShort, 
-                    code: regions[regionName].flagCode, 
+                allRegions[regionName] = {
+                    key: regionName,
+                    name: regions[regionName].nameShort,
+                    code: regions[regionName].flagCode,
                     color: regions[regionName].color,
-                    totalTrophies: 0, 
-                    element: null, 
+                    totalTrophies: 0,
+                    element: null,
                     hasAppeared: false,
-                    isRegion: true, 
+                    isRegion: true,
                     countries: regions[regionName].countries
                 };
             }
 
             // --- COUNTRY MAPPING & TRANSLATION ---
             const countryNameMap = {
-                'EGYPTE': { code: 'EG', region: 'Afrique du Nord', names: { fr: 'ÉGYPTE', en: 'EGYPT', es: 'EGIPTO' } }, 
+                'EGYPTE': { code: 'EG', region: 'Afrique du Nord', names: { fr: 'ÉGYPTE', en: 'EGYPT', es: 'EGIPTO' } },
                 'ETHIOPIE': { code: 'ET', region: 'Afrique de l\'Est', names: { fr: 'ÉTHIOPIE', en: 'ETHIOPIA', es: 'ETIOPÍA' } },
-                'GHANA': { code: 'GH', region: 'Afrique de l\'Ouest', names: { fr: 'GHANA', en: 'GHANA', es: 'GHANA' } }, 
+                'GHANA': { code: 'GH', region: 'Afrique de l\'Ouest', names: { fr: 'GHANA', en: 'GHANA', es: 'GHANA' } },
                 'CAMEROUN': { code: 'CM', region: 'Afrique Centrale', names: { fr: 'CAMEROUN', en: 'CAMEROON', es: 'CAMERÚN' } },
-                'COTE IVOIRE': { code: 'CI', region: 'Afrique de l\'Ouest', names: { fr: 'CÔTE D\'IVOIRE', en: 'IVORY COAST', es: 'COSTA DE MARFIL' } }, 
+                'COTE IVOIRE': { code: 'CI', region: 'Afrique de l\'Ouest', names: { fr: 'CÔTE D\'IVOIRE', en: 'IVORY COAST', es: 'COSTA DE MARFIL' } },
                 'RD CONGO': { code: 'CD', region: 'Afrique Centrale', names: { fr: 'RD CONGO', en: 'DR CONGO', es: 'RD CONGO' } },
-                'SOUDAN': { code: 'SD', region: 'Afrique de l\'Est', names: { fr: 'SOUDAN', en: 'SUDAN', es: 'SUDÁN' } }, 
+                'SOUDAN': { code: 'SD', region: 'Afrique de l\'Est', names: { fr: 'SOUDAN', en: 'SUDAN', es: 'SUDÁN' } },
                 'CONGO BRAZA': { code: 'CG', region: 'Afrique Centrale', names: { fr: 'CONGO', en: 'CONGO', es: 'CONGO' } },
-                'GUINEE CONAKRY': { code: 'GN', region: 'Afrique de l\'Ouest', names: { fr: 'GUINÉE', en: 'GUINEA', es: 'GUINEA' } }, 
+                'GUINEE CONAKRY': { code: 'GN', region: 'Afrique de l\'Ouest', names: { fr: 'GUINÉE', en: 'GUINEA', es: 'GUINEA' } },
                 'MAROC': { code: 'MA', region: 'Afrique du Nord', names: { fr: 'MAROC', en: 'MOROCCO', es: 'MARRUECOS' } },
-                'ALGERIE': { code: 'DZ', region: 'Afrique du Nord', names: { fr: 'ALGÉRIE', en: 'ALGERIA', es: 'ARGELIA' } }, 
+                'ALGERIE': { code: 'DZ', region: 'Afrique du Nord', names: { fr: 'ALGÉRIE', en: 'ALGERIA', es: 'ARGELIA' } },
                 'NIGERIA': { code: 'NG', region: 'Afrique de l\'Ouest', names: { fr: 'NIGERIA', en: 'NIGERIA', es: 'NIGERIA' } },
-                'KENYA': { code: 'KE', region: 'Afrique de l\'Est', names: { fr: 'KENYA', en: 'KENYA', es: 'KENIA' } }, 
+                'KENYA': { code: 'KE', region: 'Afrique de l\'Est', names: { fr: 'KENYA', en: 'KENYA', es: 'KENIA' } },
                 'TUNISIE': { code: 'TN', region: 'Afrique du Nord', names: { fr: 'TUNISIE', en: 'TUNISIA', es: 'TÚNEZ' } },
-                'ZAMBIE': { code: 'ZM', region: 'Afrique Australe', names: { fr: 'ZAMBIE', en: 'ZAMBIA', es: 'ZAMBIA' } }, 
+                'ZAMBIE': { code: 'ZM', region: 'Afrique Australe', names: { fr: 'ZAMBIE', en: 'ZAMBIA', es: 'ZAMBIA' } },
                 'AFS': { code: 'ZA', region: 'Afrique Australe', names: { fr: 'AFS', en: 'S. AFRICA', es: 'SUDÁFRICA' } },
-                'ANGOLA': { code: 'AO', region: 'Afrique Australe', names: { fr: 'ANGOLA', en: 'ANGOLA', es: 'ANGOLA' } }, 
+                'ANGOLA': { code: 'AO', region: 'Afrique Australe', names: { fr: 'ANGOLA', en: 'ANGOLA', es: 'ANGOLA' } },
                 'GAMBIE': { code: 'GM', region: 'Afrique de l\'Ouest', names: { fr: 'GAMBIE', en: 'GAMBIA', es: 'GAMBIA' } },
-                'GUINEE EQUATORIALE': { code: 'GQ', region: 'Afrique Centrale', names: { fr: 'GUINÉE ÉQUAT.', en: 'EQ. GUINEA', es: 'GUINEA EC.' } }, 
+                'GUINEE EQUATORIALE': { code: 'GQ', region: 'Afrique Centrale', names: { fr: 'GUINÉE ÉQUAT.', en: 'EQ. GUINEA', es: 'GUINEA EC.' } },
                 'LIBYE': { code: 'LY', region: 'Afrique du Nord', names: { fr: 'LIBYE', en: 'LIBYA', es: 'LIBIA' } },
-                'MALI': { code: 'ML', region: 'Afrique de l\'Ouest', names: { fr: 'MALI', en: 'MALI', es: 'MALI' } }, 
+                'MALI': { code: 'ML', region: 'Afrique de l\'Ouest', names: { fr: 'MALI', en: 'MALI', es: 'MALI' } },
                 'GABON': { code: 'GA', region: 'Afrique Centrale', names: { fr: 'GABON', en: 'GABON', es: 'GABÓN' } },
-                'BURKINA FASO': { code: 'BF', region: 'Afrique de l\'Ouest', names: { fr: 'BURKINA FASO', en: 'BURKINA', es: 'BURKINA FASO' } }, 
+                'BURKINA FASO': { code: 'BF', region: 'Afrique de l\'Ouest', names: { fr: 'BURKINA FASO', en: 'BURKINA', es: 'BURKINA FASO' } },
                 'MADAGASCAR': { code: 'MG', region: 'Afrique Australe', names: { fr: 'MADAGASCAR', en: 'MADAGASCAR', es: 'MADAGASCAR' } },
                 'SENEGAL': { code: 'SN', region: 'Afrique de l\'Ouest', names: { fr: 'SÉNÉGAL', en: 'SENEGAL', es: 'SENEGAL' } }
             };
@@ -952,11 +1037,11 @@
 
                 const info = countryNameMap[countryKeyClean];
 
-                return { 
-                    countryKey: countryKeyClean, 
-                    clubName: clubName.trim(), 
-                    code: info ? info.code : null, 
-                    count: count, 
+                return {
+                    countryKey: countryKeyClean,
+                    clubName: clubName.trim(),
+                    code: info ? info.code : null,
+                    count: count,
                     displayCount: displayCount,
                     isClub: isClub
                 };
@@ -978,67 +1063,73 @@
 
             // --- SCREEN/FILTER NAVIGATION ---
 
-            window.showIntroScreen = function() {
+            window.showIntroScreen = function () {
                 const lang = languageSelect.value;
-                setLanguage(lang); 
+                setLanguage(lang);
 
                 const langScreen = document.getElementById('language-screen');
                 const startScreen = document.getElementById('start-screen');
 
-                gsap.to(langScreen, { opacity: 0, visibility: 'hidden', duration: 0.3, onComplete: () => {
-                    langScreen.style.display = 'none';
-                    startScreen.style.display = 'flex';
-                    gsap.to(startScreen, { opacity: 1, visibility: 'visible', duration: 0.3 });
-                }});
-            }
-
-            window.showFilterScreen = function() {
-                const startScreen = document.getElementById('start-screen');
-                gsap.to(startScreen, { opacity: 0, visibility: 'hidden', duration: 0.3, onComplete: () => {
-                    startScreen.style.display = 'none';
-
-                    const filterScreen = document.getElementById('filter-screen');
-                    filterScreen.style.display = 'flex';
-                    gsap.to(filterScreen, { opacity: 1, visibility: 'visible', duration: 0.3 });
-
-                    if (regionFiltersDiv.children.length === 0) {
-                        initFilterElements(true); 
-                    } else {
-                        initFilterElements(false); 
+                gsap.to(langScreen, {
+                    opacity: 0, visibility: 'hidden', duration: 0.3, onComplete: () => {
+                        langScreen.style.display = 'none';
+                        startScreen.style.display = 'flex';
+                        gsap.to(startScreen, { opacity: 1, visibility: 'visible', duration: 0.3 });
                     }
-                }});
+                });
             }
 
-            window.launchRankingFromFilter = function() {
+            window.showFilterScreen = function () {
+                const startScreen = document.getElementById('start-screen');
+                gsap.to(startScreen, {
+                    opacity: 0, visibility: 'hidden', duration: 0.3, onComplete: () => {
+                        startScreen.style.display = 'none';
+
+                        const filterScreen = document.getElementById('filter-screen');
+                        filterScreen.style.display = 'flex';
+                        gsap.to(filterScreen, { opacity: 1, visibility: 'visible', duration: 0.3 });
+
+                        if (regionFiltersDiv.children.length === 0) {
+                            initFilterElements(true);
+                        } else {
+                            initFilterElements(false);
+                        }
+                    }
+                });
+            }
+
+            window.launchRankingFromFilter = function () {
                 applyFilters(); // Applique les filtres (y compris le mode de pondération)
 
                 const filterScreen = document.getElementById('filter-screen');
-                gsap.to(filterScreen, { opacity: 0, visibility: 'hidden', duration: 0.3, onComplete: () => {
-                    filterScreen.style.display = 'none';
+                gsap.to(filterScreen, {
+                    opacity: 0, visibility: 'hidden', duration: 0.3, onComplete: () => {
+                        filterScreen.style.display = 'none';
 
-                    if (!animationStarted) {
-                        startAll(); 
-                        animationStarted = true;
-                    } else {
-                         clearTimeout(timer);
-                         gsap.globalTimeline.clear(); // Nettoyer les animations GSAP
-                         
-                         // Réinitialisation complète pour relancer
-                         allCountries = {}; 
-                         for(const key in allRegions) { 
-                             allRegions[key].totalTrophies = 0; 
-                             allRegions[key].totalWeightedPoints = 0; // Ajouté
-                             allRegions[key].weightedPoints = 0; // Ajouté
-                             allRegions[key].element = null; 
-                             allRegions[key].hasAppeared = false; 
-                         } 
-                         yearlyWins = {}; 
-                         
-                         parseFilteredData(); // Reparser les données avec les nouveaux filtres
-                         createDOMElements(); // Recréer les éléments
-                         startAnimation(); // Lancer la nouvelle animation
+                        if (!animationStarted) {
+                            startAll();
+                            animationStarted = true;
+                        } else {
+                            clearTimeout(timer);
+                            gsap.globalTimeline.clear(); // Nettoyer les animations GSAP
+
+                            // Réinitialisation complète pour relancer
+                            allCountries = {};
+                            for (const key in allRegions) {
+                                allRegions[key].totalTrophies = 0;
+                                allRegions[key].totalWeightedPoints = 0; // Ajouté
+                                allRegions[key].weightedPoints = 0; // Ajouté
+                                allRegions[key].element = null;
+                                allRegions[key].hasAppeared = false;
+                            }
+                            yearlyWins = {};
+
+                            parseFilteredData(); // Reparser les données avec les nouveaux filtres
+                            createDOMElements(); // Recréer les éléments
+                            startAnimation(); // Lancer la nouvelle animation
+                        }
                     }
-                }});
+                });
             }
 
             async function init() {
@@ -1049,18 +1140,18 @@
                     }
                     const rawJSON = await response.json();
 
-                    await parseRawData(rawJSON); 
+                    await parseRawData(rawJSON);
                     initEditionFilters();
 
-                    languageSelect.value = currentLang; 
-                    setLanguage(currentLang); 
+                    languageSelect.value = currentLang;
+                    setLanguage(currentLang);
 
                     document.getElementById('start-screen').style.display = 'none';
                     document.getElementById('filter-screen').style.display = 'none';
                     document.getElementById('language-screen').style.display = 'flex';
 
                     // Listener de pause/reprise sur le contenu principal
-                    mainContentWrapper.addEventListener('click', togglePauseResume); 
+                    mainContentWrapper.addEventListener('click', togglePauseResume);
 
                 } catch (error) {
                     console.error("Échec de l'initialisation:", error);
@@ -1069,8 +1160,8 @@
             }
 
             // --- PAUSE/RESUME LOGIC ---
-            window.togglePauseResume = function() {
-                if (!animationStarted || yearIndex >= filteredYears.length) return; 
+            window.togglePauseResume = function () {
+                if (!animationStarted || yearIndex >= filteredYears.length) return;
 
                 isPaused = !isPaused;
 
@@ -1081,8 +1172,8 @@
                     pauseIndicator.style.display = 'block'; // Afficher l'indicateur
                 } else {
                     // Resume: Cacher l'indicateur, reprendre GSAP, et relancer le timer
-                    pauseIndicator.style.display = 'none'; 
-                    gsap.globalTimeline.resume(); 
+                    pauseIndicator.style.display = 'none';
+                    gsap.globalTimeline.resume();
                     setTimeout(runNextYear, 0); // Relancer le cycle
                 }
             }
@@ -1094,7 +1185,7 @@
                 let firstInit = regionFiltersDiv.children.length === 0;
 
                 // --- 1. Régions ---
-                if (firstInit) regionFiltersDiv.innerHTML = ''; 
+                if (firstInit) regionFiltersDiv.innerHTML = '';
                 const regionFragment = document.createDocumentFragment();
                 for (const regionName in regions) {
                     const id = `region-${regionName.replace(/[^a-zA-Z0-9]/g, '-')}`;
@@ -1112,7 +1203,7 @@
                         regionFragment.appendChild(item);
                     } else {
                         const input = regionFiltersDiv.querySelector(`input[data-filter-value="${regionName}"]`);
-                        if(input) {
+                        if (input) {
                             input.checked = isChecked;
                             input.nextElementSibling.textContent = translatedRegionName;
                         }
@@ -1125,27 +1216,27 @@
                 Object.values(rawYearlyData).forEach(comps => {
                     Object.keys(comps).forEach(key => allCompKeys.add(key));
                 });
-                
+
                 if (firstInit) competitionFiltersDiv.innerHTML = '';
                 const compFragment = document.createDocumentFragment();
-                
+
                 // Utiliser les clés canoniques pour un affichage stable
                 const sortedCanonicalKeys = Object.keys(competitionNameMap).sort();
-                
+
                 sortedCanonicalKeys.forEach(canonicalKey => {
                     // Trouver la/les clé(s) JSON correspondante(s)
                     const jsonKeys = Object.keys(jsonKeyToCanonicalKey).filter(k => jsonKeyToCanonicalKey[k] === canonicalKey);
-                    
+
                     if (jsonKeys.length > 0) {
                         const id = `comp-${canonicalKey.replace(/[^a-zA-Z0-9]/g, '-')}`;
                         const translatedName = getTranslatedCompName(jsonKeys[0], currentLang); // Utiliser la première clé JSON pour la traduction
-                        
+
                         // Vérifier si AU MOINS UNE des clés JSON est cochée
                         let isChecked = firstInit ? checkAllByDefault : jsonKeys.some(k => selectedCompetitions.has(k));
                         if (firstInit && isChecked) {
                             jsonKeys.forEach(k => selectedCompetitions.add(k));
                         }
-                        
+
                         // NOUVEAU: Logique pour afficher les points
                         const points = currentWeights[canonicalKey] || 0;
                         const pointsDisplay = `
@@ -1164,8 +1255,8 @@
                             `;
                             compFragment.appendChild(item);
                         } else {
-                             const input = competitionFiltersDiv.querySelector(`input[id="${id}"]`);
-                             if (input) {
+                            const input = competitionFiltersDiv.querySelector(`input[id="${id}"]`);
+                            if (input) {
                                 input.checked = isChecked;
                                 input.nextElementSibling.textContent = `${translatedName} (${canonicalKey})`;
                                 // Mettre à jour le span de points existant
@@ -1174,7 +1265,7 @@
                                     span.textContent = `(+${points} Pts)`;
                                     span.style.display = useWeightedRanking ? 'inline' : 'none';
                                 }
-                             }
+                            }
                         }
                     }
                 });
@@ -1189,7 +1280,7 @@
                             const value = target.dataset.filterValue;
                             if (target.checked) selectedRegions.add(value);
                             else selectedRegions.delete(value);
-                        
+
                         } else if (target.dataset.filterType === 'competition') {
                             const jsonKeys = target.dataset.filterValue.split(',');
                             jsonKeys.forEach(key => {
@@ -1208,7 +1299,7 @@
             }
 
             function translateRegionName(name, lang) {
-                 const names = {
+                const names = {
                     'Afrique du Nord': { fr: 'Afrique du Nord', en: 'North Africa', es: 'África del Norte' },
                     'Afrique de l\'Ouest': { fr: 'Afrique de l\'Ouest', en: 'West Africa', es: 'África Occidental' },
                     'Afrique de l\'Est': { fr: 'Afrique de l\'Est', en: 'East Africa', es: 'África Oriental' },
@@ -1255,7 +1346,7 @@
                 startYear = parseInt(startYearSelect.value);
                 endYear = parseInt(endYearSelect.value);
             }
-            
+
             // --- DATA PARSING & FILTERING ---
 
             function parseRawData(data) {
@@ -1264,16 +1355,16 @@
                 });
                 sortedYears = Object.keys(rawYearlyData).sort((a, b) => parseInt(a) - parseInt(b));
             }
-            
+
             function applyFilters() {
                 // Les valeurs sont déjà mises à jour par les listeners
                 // On réinitialise l'état avant de parser les données
                 allCountries = {};
-                for(const key in allRegions) { 
-                    allRegions[key].totalTrophies = 0; 
-                    allRegions[key].element = null; 
-                    allRegions[key].hasAppeared = false; 
-                } 
+                for (const key in allRegions) {
+                    allRegions[key].totalTrophies = 0;
+                    allRegions[key].element = null;
+                    allRegions[key].hasAppeared = false;
+                }
                 yearlyWins = {};
 
                 parseFilteredData();
@@ -1282,7 +1373,7 @@
             }
 
             function parseFilteredData() {
-                filteredYears = sortedYears.filter(year => 
+                filteredYears = sortedYears.filter(year =>
                     parseInt(year) >= startYear && parseInt(year) <= endYear
                 );
 
@@ -1293,7 +1384,7 @@
                     for (const compKey in yearData) {
                         // Filtre 1: Compétition
                         if (!selectedCompetitions.has(compKey)) {
-                            continue; 
+                            continue;
                         }
 
                         const winnerRaw = yearData[compKey];
@@ -1312,24 +1403,24 @@
                             // 1. Initialiser le pays si nécessaire
                             if (!allCountries[countryKey]) {
                                 const info = countryNameMap[countryKey];
-                                allCountries[countryKey] = { 
-                                    key: countryKey, 
-                                    name: getTranslatedCountryName(countryKey, currentLang), 
-                                    code: info.code, 
-                                    totalTrophies: 0, 
+                                allCountries[countryKey] = {
+                                    key: countryKey,
+                                    name: getTranslatedCountryName(countryKey, currentLang),
+                                    code: info.code,
+                                    totalTrophies: 0,
                                     weightedPoints: 0, // Total potentiel de points
                                     totalWeightedPoints: 0, // Accumulation pour l'animation
-                                    element: null, 
+                                    element: null,
                                     hasAppeared: false,
                                     region: info.region,
-                                    isRegion: false 
+                                    isRegion: false
                                 };
                             }
 
                             // (L'accumulation se fait dans updateRankingForYear)
 
                             // Stocker l'information complète du vainqueur pour l'affichage de la compétition
-                            winsThisYear[compKey] = winnerInfo; 
+                            winsThisYear[compKey] = winnerInfo;
                         }
                     }
                     if (Object.keys(winsThisYear).length > 0) { yearlyWins[year] = winsThisYear; }
@@ -1344,7 +1435,7 @@
                     r.totalTrophies = 0;
                     r.totalWeightedPoints = 0;
                 });
-                
+
                 // Retirer les années qui n'ont plus d'événements après filtrage
                 filteredYears = filteredYears.filter(year => yearlyWins[year]);
             }
@@ -1352,38 +1443,38 @@
             // --- ANIMATION CORE ---
 
             function createDOMElements() {
-                chart.innerHTML = ''; 
+                chart.innerHTML = '';
                 gsap.globalTimeline.clear(); // Vider la timeline GSAP
 
                 let rankingEntities = [];
-                
+
                 // 1. Initialiser tous les pays
                 for (const key in countryNameMap) {
                     const info = countryNameMap[key];
                     if (!allCountries[key] && selectedRegions.has(info.region)) {
-                         allCountries[key] = { 
-                            key: key, 
-                            name: getTranslatedCountryName(key, currentLang), 
-                            code: info.code, 
-                            totalTrophies: 0, 
+                        allCountries[key] = {
+                            key: key,
+                            name: getTranslatedCountryName(key, currentLang),
+                            code: info.code,
+                            totalTrophies: 0,
                             weightedPoints: 0,
                             totalWeightedPoints: 0,
-                            element: null, 
+                            element: null,
                             hasAppeared: false,
                             region: info.region,
-                            isRegion: false 
+                            isRegion: false
                         };
                     }
                 }
-                
+
                 // 2. Initialiser toutes les régions
-                for(const key in allRegions) { 
-                    allRegions[key].totalTrophies = 0; 
+                for (const key in allRegions) {
+                    allRegions[key].totalTrophies = 0;
                     allRegions[key].weightedPoints = 0;
                     allRegions[key].totalWeightedPoints = 0;
-                    allRegions[key].element = null; 
-                    allRegions[key].hasAppeared = false; 
-                } 
+                    allRegions[key].element = null;
+                    allRegions[key].hasAppeared = false;
+                }
 
                 if (!displayRegionRank) {
                     Object.values(allCountries)
@@ -1393,7 +1484,7 @@
 
                 if (displayRegionRank) {
                     Object.values(allRegions)
-                        .filter(r => selectedRegions.has(r.key)) 
+                        .filter(r => selectedRegions.has(r.key))
                         .forEach(r => rankingEntities.push(r));
                 }
 
@@ -1419,7 +1510,7 @@
                         flagHtml = `<img src="${flagSrc}" onerror="this.style.display='none'" alt="Flag ${displayName}" class="flag">`;
                     }
 
-                    gsap.set(row, { opacity: 0, visibility: 'hidden' }); 
+                    gsap.set(row, { opacity: 0, visibility: 'hidden' });
 
                     row.innerHTML = `<div class="country-info">
                             ${flagHtml}
@@ -1444,14 +1535,14 @@
                     competitionsDisplayContainer.innerHTML = '';
                     competitionsDisplayContainer.appendChild(allCompetitionsContainer);
                 }
-                allCompetitionsContainer.innerHTML = ''; 
-                gsap.set(allCompetitionsContainer, { position: 'relative', y: 0 }); 
+                allCompetitionsContainer.innerHTML = '';
+                gsap.set(allCompetitionsContainer, { position: 'relative', y: 0 });
             }
 
             function startAll() {
                 // FIX: createDOMElements doit être appelé ici
                 if (!allCompetitionsContainer || chart.children.length === 0) {
-                    createDOMElements(); 
+                    createDOMElements();
                 }
                 startAnimation();
             }
@@ -1461,27 +1552,25 @@
                 isPaused = false; // Assurer que l'état de pause est réinitialisé
                 pauseIndicator.style.display = 'none';
 
-                if (filteredYears.length > 0) { 
+                if (filteredYears.length > 0) {
                     // Mise à jour initiale pour la première année
                     updateCompetitionsDisplay(filteredYears[0], false);
                     updateRankingForYear(filteredYears[0]);
-                    
-                    yearIndex++; 
+
+                    yearIndex++;
                     const firstYearDelay = BASE_SECONDS_PER_YEAR * 1000;
                     timer = setTimeout(runNextYear, firstYearDelay);
                 } else {
-                    yearDisplay.textContent = `${startYear}`; 
+                    yearDisplay.textContent = `${startYear}`;
                     competitionsDisplayContainer.innerHTML = `<p class="no-competitions">${translations[currentLang].no_competitions_filtered}</p>`;
                 }
             }
- 
+
             function runNextYear() {
                 if (isPaused) return;
 
-                if (yearIndex >= filteredYears.length) { 
+                if (yearIndex >= filteredYears.length) {
                     yearDisplay.textContent = translations[currentLang].final_year;
-                    // Assurer que le dernier classement est affiché
-                    updateRankingForYear(filteredYears[filteredYears.length - 1]);
                     return;
                 }
 
@@ -1497,12 +1586,12 @@
                 updateRankingForYear(currentYear);
                 updateCompetitionsDisplay(currentYear, true);
 
-                yearIndex++; 
+                yearIndex++;
                 timer = setTimeout(runNextYear, delay * 1000);
             }
 
             function updateRankingForYear(year) {
-                yearDisplay.textContent = `${year}`; 
+                yearDisplay.textContent = `${year}`;
 
                 // (La logique d'accumulation est gérée par la fonction modifiée plus bas)
 
@@ -1525,7 +1614,7 @@
                     }
                     const nameA = a.isRegion ? translateRegionName(a.key, currentLang) : getTranslatedCountryName(a.key, currentLang);
                     const nameB = b.isRegion ? translateRegionName(b.key, currentLang) : getTranslatedCountryName(b.key, currentLang);
-                    return nameA.localeCompare(nameB); 
+                    return nameA.localeCompare(nameB);
                 });
 
                 const maxTrophies = Math.max(1, rankedEntities[0] ? rankedEntities[0].totalTrophies : 0);
@@ -1538,49 +1627,49 @@
                     const progressBar = countryRow.querySelector('.progress-bar');
                     const trophyCount = countryRow.querySelector('.trophy-count');
                     const countryNameSpan = countryRow.querySelector('.country-name');
-                    
+
                     const valueToDisplay = entity.totalTrophies;
                     const displayName = entity.isRegion ? translateRegionName(entity.key, currentLang) : getTranslatedCountryName(entity.key, currentLang);
                     countryNameSpan.textContent = displayName;
 
                     const newY = index * ROW_HEIGHT;
-                    const rank = index + 1; 
+                    const rank = index + 1;
 
-                    let progressBarBackground = 'linear-gradient(90deg, #FFD700, #DAA520)'; 
+                    let progressBarBackground = 'linear-gradient(90deg, #FFD700, #DAA520)';
 
                     if (entity.isRegion) {
-                        progressBarBackground = `linear-gradient(90deg, ${entity.color}, ${entity.color}AA)`; 
+                        progressBarBackground = `linear-gradient(90deg, ${entity.color}, ${entity.color}AA)`;
                     } else {
                         if (rank === 2) {
-                            progressBarBackground = 'linear-gradient(90deg, #C0C0C0, #A9A9A9)'; 
+                            progressBarBackground = 'linear-gradient(90deg, #C0C0C0, #A9A9A9)';
                         } else if (rank === 3) {
-                            progressBarBackground = 'linear-gradient(90deg, #CD7F32, #B87333)'; 
+                            progressBarBackground = 'linear-gradient(90deg, #CD7F32, #B87333)';
                         } else if (rank > 3) {
-                            progressBarBackground = 'linear-gradient(90deg, #4e73df, #224abe)'; 
+                            progressBarBackground = 'linear-gradient(90deg, #4e73df, #224abe)';
                         }
                     }
 
                     if (valueToDisplay > 0 && !entity.hasAppeared) {
                         entity.hasAppeared = true;
                         gsap.fromTo(countryRow, { y: newY, opacity: 0, visibility: 'visible' }, { y: newY, opacity: 1, duration: 0.8, ease: 'power3.out' });
-                    } 
+                    }
                     else if (entity.hasAppeared) {
                         gsap.to(countryRow, { y: newY, duration: .5, ease: 'power3.inOut' });
                         gsap.set(countryRow, { visibility: 'visible', opacity: 1 });
                     }
 
                     if (entity.hasAppeared) {
-                        gsap.to(progressBar, { 
-                            width: `${(valueToDisplay / maxTrophies) * 100}%`, 
-                            background: progressBarBackground, 
-                            duration: 0.5, 
-                            ease: 'power3.inOut' 
+                        gsap.to(progressBar, {
+                            width: `${(valueToDisplay / maxTrophies) * 100}%`,
+                            background: progressBarBackground,
+                            duration: 0.5,
+                            ease: 'power3.inOut'
                         });
-                        gsap.to(trophyCount, { 
-                            innerText: valueToDisplay, 
-                            duration: 0.8, 
-                            snap: { innerText: 1 }, 
-                            ease: 'power1.inOut' 
+                        gsap.to(trophyCount, {
+                            innerText: valueToDisplay,
+                            duration: 0.8,
+                            snap: { innerText: 1 },
+                            ease: 'power1.inOut'
                         });
                     }
                 });
@@ -1590,15 +1679,15 @@
                     const isVisible = !displayRegionRank && country.totalTrophies > 0 && selectedRegions.has(country.region);
                     if (!isVisible && country.element && country.hasAppeared) {
                         gsap.to(country.element, { opacity: 0, visibility: 'hidden', duration: 0.3 });
-                        country.hasAppeared = false; 
+                        country.hasAppeared = false;
                     }
                 });
 
-                 Object.values(allRegions).forEach(region => {
+                Object.values(allRegions).forEach(region => {
                     const isVisible = displayRegionRank && region.totalTrophies > 0 && selectedRegions.has(region.key);
                     if (!isVisible && region.element && region.hasAppeared) {
                         gsap.to(region.element, { opacity: 0, visibility: 'hidden', duration: 0.3 });
-                        region.hasAppeared = false; 
+                        region.hasAppeared = false;
                     }
                 });
             }
@@ -1606,31 +1695,31 @@
             function updateCompetitionsDisplay(year, animate = true) {
                 // FIX: S'assurer que allCompetitionsContainer existe (corrigé dans startAll)
                 if (!allCompetitionsContainer) {
-                     console.error("allCompetitionsContainer est null dans updateCompetitionsDisplay");
-                     return 0;
+                    console.error("allCompetitionsContainer est null dans updateCompetitionsDisplay");
+                    return 0;
                 }
 
-                const competitions = yearlyWins[year] || {}; 
+                const competitions = yearlyWins[year] || {};
                 const compKeys = Object.keys(competitions);
 
                 const yearContainer = document.createElement('div');
                 yearContainer.className = 'year-group-container';
 
-                let totalYearHeight = 0; 
+                let totalYearHeight = 0;
 
                 const separator = document.createElement('div');
                 separator.className = 'year-separator';
                 separator.innerHTML = `<span class="year-separator-text">${year}</span>`;
                 yearContainer.appendChild(separator);
-                totalYearHeight += SEPARATOR_HEIGHT; 
+                totalYearHeight += SEPARATOR_HEIGHT;
 
                 let validCompetitionsCount = 0;
 
                 compKeys.forEach((compNameKey) => {
                     const winnerInfo = competitions[compNameKey];
                     if (!winnerInfo) return; // Sécurité
-                    
-                    const translatedCompName = getTranslatedCompName(compNameKey, currentLang); 
+
+                    const translatedCompName = getTranslatedCompName(compNameKey, currentLang);
                     const competitionColor = getCompetitionColor(compNameKey); // Utiliser la clé JSON pour la couleur
 
                     let winnerDisplay;
@@ -1668,33 +1757,33 @@
                 if (validCompetitionsCount === 0) {
                     // Ne rien ajouter si aucune compétition valide
                 } else {
-                    totalYearHeight -= COMP_BOX_GAP; 
+                    totalYearHeight -= COMP_BOX_GAP;
                 }
 
                 yearContainer.style.marginBottom = `${COMP_BOX_GAP}px`;
-                totalYearHeight += COMP_BOX_GAP; 
+                totalYearHeight += COMP_BOX_GAP;
 
-                const scrollDistance = totalYearHeight; 
-                gsap.set(yearContainer, { height: totalYearHeight - COMP_BOX_GAP }); 
-                
+                const scrollDistance = totalYearHeight;
+                gsap.set(yearContainer, { height: totalYearHeight - COMP_BOX_GAP });
+
                 // C'EST ICI LE BUG. allCompetitionsContainer était null.
                 allCompetitionsContainer.prepend(yearContainer);
 
                 if (animate) {
                     gsap.set(allCompetitionsContainer, { y: -scrollDistance });
                     gsap.to(allCompetitionsContainer, {
-                        y: 0, 
-                        duration: BASE_SECONDS_PER_YEAR * 0.9, 
+                        y: 0,
+                        duration: BASE_SECONDS_PER_YEAR * 0.9,
                         ease: 'power3.out'
                     });
                 }
-                
-                return scrollDistance; 
+
+                return scrollDistance;
             }
 
 
             // --- DEBUT NOUVEAU: LOGIQUE DES POINTS PONDÉRÉS (Version 4.0 - Intégrant les pastilles) ---
-            
+
             // 1. Définition des points par défaut (basé sur les clés canoniques)
             const DEFAULT_WEIGHTS = {
                 'CAN H': 100,
@@ -1723,7 +1812,7 @@
                 if (currentWeights[key] === undefined) currentWeights[key] = 0;
             });
 
-            let useWeightedRanking = false; 
+            let useWeightedRanking = false;
 
             // 2. Ajout des traductions
             translations.fr.filter_ranking_mode_title = "Mode de Classement";
@@ -1749,12 +1838,12 @@
             translations.es.filter_weights_instruction = "Ajuste los puntos otorgados por título.";
             translations.es.filter_reset_weights = "Restablecer Puntos";
             translations.es.weighted_points_label = "Pts";
-            
+
             // 3. Fonctions UI pour les points
             function createWeightingUI() {
                 const filterScreen = document.getElementById('filter-screen');
                 const screenContent = filterScreen.querySelector('.screen-content');
-                
+
                 // S'assurer que les sections ne sont pas dupliquées
                 if (document.getElementById('ranking-mode-section')) return;
 
@@ -1774,7 +1863,7 @@
                     </div>
                 `;
                 // Placer en haut du screen-content, avant la section 1.
-                screenContent.insertBefore(modeFilterSection, screenContent.firstChild); 
+                screenContent.insertBefore(modeFilterSection, screenContent.firstChild);
 
                 // 2. Ajouter la section de configuration des points (pondération)
                 const weightFilterSection = document.createElement('div');
@@ -1790,14 +1879,14 @@
                         <button class="next-btn" id="resetWeightsButton" type="button" data-lang-key="filter_reset_weights" style="background-color: #f6c23e;">Réinitialiser les Points</button>
                     </div>
                 `;
-                 // Insérer après la section 3 (Période)
+                // Insérer après la section 3 (Période)
                 const periodFilterSection = screenContent.querySelector('.filter-section:nth-child(4)'); // 4ème car le mode est 1er
                 if (periodFilterSection) {
                     periodFilterSection.parentNode.insertBefore(weightFilterSection, periodFilterSection.nextElementSibling);
                 } else {
                     screenContent.appendChild(weightFilterSection); // Fallback
                 }
-                
+
                 // 3. Remplir les inputs de pondération
                 updateWeightInputs();
 
@@ -1813,17 +1902,17 @@
                     });
 
                     weightFilterSection.addEventListener('click', (e) => {
-                         if (e.target.id === 'resetWeightsButton') {
+                        if (e.target.id === 'resetWeightsButton') {
                             if (confirm('Voulez-vous réinitialiser tous les points à leurs valeurs par défaut ?')) {
                                 // Réinitialiser aux valeurs par défaut
                                 currentWeights = { ...DEFAULT_WEIGHTS };
                                 // Mettre à jour les clés manquantes à 0
                                 Object.keys(competitionNameMap).forEach(key => {
-                                     if(currentWeights[key] === undefined) currentWeights[key] = 0;
+                                    if (currentWeights[key] === undefined) currentWeights[key] = 0;
                                 });
                                 updateWeightInputs(); // Mise à jour de l'UI (inputs ET spans)
                             }
-                         }
+                        }
                     });
 
                     weightFilterSection.addEventListener('change', (e) => {
@@ -1833,7 +1922,7 @@
                             if (isNaN(value) || value < 0) value = 0;
                             currentWeights[key] = value;
                             e.target.value = value; // Assainir l'input
-                            
+
                             // NOUVEAU: Mettre à jour le span dans la section 2
                             const spanDisplay = competitionFiltersDiv.querySelector(`.competition-points-display[data-comp-key="${key}"]`);
                             if (spanDisplay) spanDisplay.textContent = `(+${value} Pts)`;
@@ -1852,7 +1941,7 @@
                 const weightInputGrid = document.getElementById('weight-input-grid');
                 if (!weightInputGrid) return;
                 weightInputGrid.innerHTML = '';
-                
+
                 const sortedCanonicalKeys = Object.keys(competitionNameMap).sort();
 
                 sortedCanonicalKeys.forEach(canonicalKey => {
@@ -1862,20 +1951,20 @@
 
                     // Mettre à jour l'input (Section 4)
                     const item = document.createElement('div');
-                    item.className = 'edition-group'; 
+                    item.className = 'edition-group';
                     item.style.marginBottom = '8px';
                     item.innerHTML = `
                         <label for="weight-${canonicalKey}">${translatedName} (${canonicalKey})</label>
                         <input type="number" id="weight-${canonicalKey}" data-comp-key="${canonicalKey}" value="${currentWeight}" min="0">
                     `;
                     weightInputGrid.appendChild(item);
-                    
+
                     // Mettre à jour le span (Section 2)
                     const spanDisplay = competitionFiltersDiv.querySelector(`.competition-points-display[data-comp-key="${canonicalKey}"]`);
                     if (spanDisplay) spanDisplay.textContent = `(+${currentWeight} Pts)`;
                 });
             }
-            
+
             // NOUVEAU: Fonction pour afficher/masquer les points dans la section 2
             function updateCompetitionPointDisplays(visible) {
                 const spans = competitionFiltersDiv.querySelectorAll('.competition-points-display');
@@ -1886,22 +1975,22 @@
 
             // Met à jour les labels du sélecteur de mode
             function updateRankingModeLabels() {
-                 const rankModeTrophies = document.getElementById('rankModeTrophies');
-                 const rankModeWeighted = document.getElementById('rankModeWeighted');
-                 if (rankModeTrophies) rankModeTrophies.nextElementSibling.textContent = translations[currentLang].rank_mode_trophies;
-                 if (rankModeWeighted) rankModeWeighted.nextElementSibling.textContent = translations[currentLang].rank_mode_weighted;
-                 
-                 const title = document.querySelector('#ranking-mode-section h3');
-                 if (title) title.textContent = translations[currentLang].filter_ranking_mode_title;
+                const rankModeTrophies = document.getElementById('rankModeTrophies');
+                const rankModeWeighted = document.getElementById('rankModeWeighted');
+                if (rankModeTrophies) rankModeTrophies.nextElementSibling.textContent = translations[currentLang].rank_mode_trophies;
+                if (rankModeWeighted) rankModeWeighted.nextElementSibling.textContent = translations[currentLang].rank_mode_weighted;
+
+                const title = document.querySelector('#ranking-mode-section h3');
+                if (title) title.textContent = translations[currentLang].filter_ranking_mode_title;
             }
 
             // Met à jour les labels de la section de configuration des points
             function updateWeightSectionLabels() {
-                 const weightFilterSection = document.getElementById('weight-filter-section');
-                 if (!weightFilterSection) return;
-                 weightFilterSection.querySelector('h3').textContent = translations[currentLang].filter_weights_title;
-                 weightFilterSection.querySelector('p').textContent = translations[currentLang].filter_weights_instruction;
-                 document.getElementById('resetWeightsButton').textContent = translations[currentLang].filter_reset_weights;
+                const weightFilterSection = document.getElementById('weight-filter-section');
+                if (!weightFilterSection) return;
+                weightFilterSection.querySelector('h3').textContent = translations[currentLang].filter_weights_title;
+                weightFilterSection.querySelector('p').textContent = translations[currentLang].filter_weights_instruction;
+                document.getElementById('resetWeightsButton').textContent = translations[currentLang].filter_reset_weights;
             }
 
             // Ajuste le style (largeur) du compteur de trophées/points
@@ -1909,18 +1998,18 @@
                 const trophyCountElements = document.querySelectorAll('.trophy-count');
                 const width = useWeightedRanking ? '60px' : '40px';
                 const fontSize = useWeightedRanking ? '1em' : '1.1em';
-                
+
                 trophyCountElements.forEach(el => {
                     el.style.width = width;
                     el.style.fontSize = fontSize;
                 });
             }
-            
+
             // MODIFIÉ: Fonction pour peupler les pastilles en fond
             function populateBackgroundPills() {
                 backgroundPillsContainer.innerHTML = ''; // Vider
                 if (!useWeightedRanking) return; // Ne rien faire si mode Titres
-                
+
                 // Définir les pastilles à afficher (clés canoniques et couleurs)
                 const pillsToShow = [
                     { key: 'CAN H', color: '#E74C3C' },
@@ -1933,18 +2022,18 @@
                     { key: 'CAN U23 H', color: '#E67E22' },
                     { key: 'CAN U20 H', color: '#7F8C8D' },
                 ];
-                
+
                 // Get min/max points *from the pills we are showing*
                 const validPoints = pillsToShow.map(p => currentWeights[p.key] || 0).filter(p => p > 0);
                 if (validPoints.length === 0) return;
-                
+
                 const minPoints = Math.min(...validPoints);
                 const maxPoints = Math.max(...validPoints);
                 const MIN_SIZE = 35; // px
                 const MAX_SIZE = 75; // px
                 const MIN_FONT = 0.7; // em
                 const MAX_FONT = 0.9; // em
-                
+
                 // Simple linear scaling function
                 const scale = (num, in_min, in_max, out_min, out_max) => {
                     // Handle division by zero if all points are the same
@@ -1958,11 +2047,11 @@
                         const label = (competitionNameMap[pill.key] ? competitionNameMap[pill.key][currentLang] : pill.key);
                         const size = scale(points, minPoints, maxPoints, MIN_SIZE, MAX_SIZE);
                         const fontSize = scale(points, minPoints, maxPoints, MIN_FONT, MAX_FONT);
-                        
+
                         // Random cluster effect
                         const transX = Math.random() * 15 - 7.5; // -7.5px to +7.5px
                         const transY = Math.random() * 10 - 5;   // -5px to +5px
-                        
+
                         backgroundPillsContainer.innerHTML += `
                             <span class="point-pill" style="
                                 background-color: ${pill.color};
@@ -1982,10 +2071,10 @@
 
             // A. MODIFICATION DE `showFilterScreen()` (POUR AFFICHER L'OPTION)
             const originalShowFilterScreen = window.showFilterScreen;
-            window.showFilterScreen = function() {
+            window.showFilterScreen = function () {
                 // Appel de l'original (qui gère l'affichage et initFilterElements)
                 originalShowFilterScreen();
-                
+
                 // Créer l'UI de pondération si ce n'est pas déjà fait
                 if (!document.getElementById('ranking-mode-section')) {
                     createWeightingUI();
@@ -1999,52 +2088,52 @@
 
             // B. MODIFICATION DE `startAll()` (POUR CORRIGER LE BUG)
             const originalStartAll = startAll;
-            startAll = function() {
+            startAll = function () {
                 // FIX: createDOMElements doit être appelé ici
                 if (!allCompetitionsContainer || chart.children.length === 0) {
-                    createDOMElements(); 
+                    createDOMElements();
                 }
-                
+
                 // NOUVEAU: Peupler les pastilles de fond
                 populateBackgroundPills();
-                
+
                 // Appel de l'original (qui appelle startAnimation)
                 originalStartAll();
             }
 
             // C. MODIFICATION DE `applyFilters()`
             const originalApplyFilters = applyFilters;
-            applyFilters = function() {
+            applyFilters = function () {
                 // Lire l'état du mode de classement
                 const selectedModeElement = document.querySelector('input[name="rankingMode"]:checked');
                 useWeightedRanking = (selectedModeElement && selectedModeElement.value === 'weighted');
 
                 // Lancer la fonction originale (qui lit les filtres et appelle parseFilteredData)
                 originalApplyFilters();
-                
+
                 // Mettre à jour le style du compteur (au cas où les éléments existent déjà)
                 updateTrophyCountLabelStyle();
-                
+
                 // Recalculer les totaux de points potentiels APRES parseFilteredData
                 recalculateWeightedPointsTotals();
             }
-            
+
             // Nouvelle fonction pour calculer les totaux de points (appelée par applyFilters)
             function recalculateWeightedPointsTotals() {
-                 // 1. Réinitialiser les totaux de points
+                // 1. Réinitialiser les totaux de points
                 Object.values(allCountries).forEach(c => c.weightedPoints = 0);
                 Object.values(allRegions).forEach(r => r.weightedPoints = 0);
-                
+
                 // 2. Parcourir les années filtrées et accumuler les points totaux (potentiels)
                 filteredYears.forEach(year => {
                     if (yearlyWins[year]) {
                         for (const compKey in yearlyWins[year]) { // compKey est la clé JSON
                             const winnerInfo = yearlyWins[year][compKey];
                             if (!winnerInfo) continue;
-                            
+
                             const countryKey = winnerInfo.countryKey;
                             const winCount = winnerInfo.count;
-                            
+
                             // Trouver la clé canonique pour obtenir les points
                             const canonicalKey = jsonKeyToCanonicalKey[compKey];
                             const points = (canonicalKey && currentWeights[canonicalKey] !== undefined) ? currentWeights[canonicalKey] : 0;
@@ -2064,27 +2153,27 @@
 
             // D. MODIFICATION DE `parseFilteredData()`
             const originalParseFilteredData = parseFilteredData;
-            parseFilteredData = function() {
+            parseFilteredData = function () {
                 // Appel de l'ancienne fonction (qui peuple allCountries, yearlyWins, etc.)
                 originalParseFilteredData();
-                
+
                 // (La logique de calcul des points a été déplacée dans recalculateWeightedPointsTotals)
                 // On s'assure juste que les champs pour l'animation sont à 0
-                 Object.values(allCountries).forEach(c => {
+                Object.values(allCountries).forEach(c => {
                     c.totalTrophies = 0;
                     c.totalWeightedPoints = 0;
-                 });
-                 Object.values(allRegions).forEach(r => {
+                });
+                Object.values(allRegions).forEach(r => {
                     r.totalTrophies = 0;
                     r.totalWeightedPoints = 0;
-                 });
+                });
             }
 
 
             // E. MODIFICATION DE `updateRankingForYear()`
             const originalUpdateRankingForYear = updateRankingForYear;
-            updateRankingForYear = function(year) {
-                yearDisplay.textContent = `${year}`; 
+            updateRankingForYear = function (year) {
+                yearDisplay.textContent = `${year}`;
 
                 // 1. Accumulation des trophées ET des points pour l'année en cours
                 if (yearlyWins[year]) {
@@ -2092,22 +2181,22 @@
                         const winnerInfo = yearlyWins[year][compKey];
                         const countryKey = winnerInfo.countryKey;
                         const winCount = winnerInfo.count;
-                        
+
                         // Trouver la clé canonique pour obtenir les points
                         const canonicalKey = jsonKeyToCanonicalKey[compKey];
                         const points = (canonicalKey && currentWeights[canonicalKey] !== undefined) ? currentWeights[canonicalKey] : 0;
                         const totalPoints = points * winCount;
 
-                        if(allCountries[countryKey]) {
-                             // Accumuler les deux
-                             allCountries[countryKey].totalTrophies += winCount; 
-                             allCountries[countryKey].totalWeightedPoints += totalPoints;
+                        if (allCountries[countryKey]) {
+                            // Accumuler les deux
+                            allCountries[countryKey].totalTrophies += winCount;
+                            allCountries[countryKey].totalWeightedPoints += totalPoints;
 
-                             const regionKey = allCountries[countryKey].region;
-                             if(allRegions[regionKey]) {
-                                 allRegions[regionKey].totalTrophies += winCount;
-                                 allRegions[regionKey].totalWeightedPoints += totalPoints;
-                             }
+                            const regionKey = allCountries[countryKey].region;
+                            if (allRegions[regionKey]) {
+                                allRegions[regionKey].totalTrophies += winCount;
+                                allRegions[regionKey].totalWeightedPoints += totalPoints;
+                            }
                         }
                     }
                 }
@@ -2116,7 +2205,7 @@
                 let rankedEntities = [];
                 // Déterminer quelle clé utiliser pour le tri ET le filtrage d'affichage
                 const sortKey = useWeightedRanking ? 'totalWeightedPoints' : 'totalTrophies';
-                
+
                 // Clé pour le filtre de visibilité (basé sur le total *potentiel* calculé dans recalculateWeightedPointsTotals)
                 const filterKey = useWeightedRanking ? 'weightedPoints' : 'totalTrophies';
 
@@ -2130,7 +2219,7 @@
                         .filter(country => (country[sortKey] > 0 || country[filterKey] > 0) && selectedRegions.has(country.region))
                         .forEach(country => rankedEntities.push(country));
                 }
-                
+
                 // 3. Tri
                 rankedEntities.sort((a, b) => {
                     if (b[sortKey] !== a[sortKey]) {
@@ -2138,7 +2227,7 @@
                     }
                     const nameA = a.isRegion ? translateRegionName(a.key, currentLang) : getTranslatedCountryName(a.key, currentLang);
                     const nameB = b.isRegion ? translateRegionName(b.key, currentLang) : getTranslatedCountryName(b.key, currentLang);
-                    return nameA.localeCompare(nameB); 
+                    return nameA.localeCompare(nameB);
                 });
 
                 // 4. Animation GSAP
@@ -2152,52 +2241,52 @@
                     const progressBar = countryRow.querySelector('.progress-bar');
                     const trophyCount = countryRow.querySelector('.trophy-count');
                     const countryNameSpan = countryRow.querySelector('.country-name');
-                    
+
                     const valueToDisplay = entity[sortKey]; // Nombre de trophées OU de points
                     const displayName = entity.isRegion ? translateRegionName(entity.key, currentLang) : getTranslatedCountryName(entity.key, currentLang);
                     countryNameSpan.textContent = displayName;
 
                     const newY = index * ROW_HEIGHT;
-                    const rank = index + 1; 
+                    const rank = index + 1;
 
-                    let progressBarBackground = 'linear-gradient(90deg, #FFD700, #DAA520)'; 
+                    let progressBarBackground = 'linear-gradient(90deg, #FFD700, #DAA520)';
                     if (entity.isRegion) {
-                        progressBarBackground = `linear-gradient(90deg, ${entity.color}, ${entity.color}AA)`; 
+                        progressBarBackground = `linear-gradient(90deg, ${entity.color}, ${entity.color}AA)`;
                     } else if (rank === 2) {
-                        progressBarBackground = 'linear-gradient(90deg, #C0C0C0, #A9A9A9)'; 
+                        progressBarBackground = 'linear-gradient(90deg, #C0C0C0, #A9A9A9)';
                     } else if (rank === 3) {
-                        progressBarBackground = 'linear-gradient(90deg, #CD7F32, #B87333)'; 
+                        progressBarBackground = 'linear-gradient(90deg, #CD7F32, #B87333)';
                     } else if (rank > 3) {
-                        progressBarBackground = 'linear-gradient(90deg, #4e73df, #224abe)'; 
+                        progressBarBackground = 'linear-gradient(90deg, #4e73df, #224abe)';
                     }
 
                     if (valueToDisplay > 0 && !entity.hasAppeared) {
                         entity.hasAppeared = true;
                         gsap.fromTo(countryRow, { y: newY, opacity: 0, visibility: 'visible' }, { y: newY, opacity: 1, duration: 0.8, ease: 'power3.out' });
-                    } 
+                    }
                     else if (entity.hasAppeared) {
                         gsap.to(countryRow, { y: newY, duration: .5, ease: 'power3.inOut' });
                         gsap.set(countryRow, { visibility: 'visible', opacity: 1 });
                     } else if (valueToDisplay === 0 && entity.hasAppeared) {
                         // Cas où l'entité retombe à 0 (ex: changement de filtre)
                         gsap.to(countryRow, { opacity: 0, visibility: 'hidden', duration: 0.3 });
-                        entity.hasAppeared = false; 
+                        entity.hasAppeared = false;
                     }
 
                     if (entity.hasAppeared) {
-                        gsap.to(progressBar, { 
-                            width: `${(valueToDisplay / maxTrophiesOrPoints) * 100}%`, 
-                            background: progressBarBackground, 
-                            duration: 0.5, 
-                            ease: 'power3.inOut' 
+                        gsap.to(progressBar, {
+                            width: `${(valueToDisplay / maxTrophiesOrPoints) * 100}%`,
+                            background: progressBarBackground,
+                            duration: 0.5,
+                            ease: 'power3.inOut'
                         });
-                        gsap.to(trophyCount, { 
-                            innerText: valueToDisplay, 
-                            duration: 0.8, 
-                            snap: { innerText: 1 }, 
-                            ease: 'power1.inOut' 
+                        gsap.to(trophyCount, {
+                            innerText: valueToDisplay,
+                            duration: 0.8,
+                            snap: { innerText: 1 },
+                            ease: 'power1.inOut'
                         });
-                        
+
                         // Mise à jour du style du compteur
                         trophyCount.style.width = useWeightedRanking ? '60px' : '40px';
                         trophyCount.style.fontSize = useWeightedRanking ? '1em' : '1.1em';
@@ -2211,15 +2300,15 @@
                     const isVisible = !displayRegionRank && (country[sortKey] > 0 || country[visibilityKey] > 0) && selectedRegions.has(country.region);
                     if (!isVisible && country.element && country.hasAppeared) {
                         gsap.to(country.element, { opacity: 0, visibility: 'hidden', duration: 0.3 });
-                        country.hasAppeared = false; 
+                        country.hasAppeared = false;
                     }
                 });
 
-                 Object.values(allRegions).forEach(region => {
+                Object.values(allRegions).forEach(region => {
                     const isVisible = displayRegionRank && (region[sortKey] > 0 || region[visibilityKey] > 0) && selectedRegions.has(region.key);
                     if (!isVisible && region.element && region.hasAppeared) {
                         gsap.to(region.element, { opacity: 0, visibility: 'hidden', duration: 0.3 });
-                        region.hasAppeared = false; 
+                        region.hasAppeared = false;
                     }
                 });
             }
@@ -2227,7 +2316,7 @@
 
             // F. MODIFICATION DE `updateCompetitionsDisplay()`
             const originalUpdateCompetitionsDisplay = updateCompetitionsDisplay;
-            updateCompetitionsDisplay = function(year, animate = true) {
+            updateCompetitionsDisplay = function (year, animate = true) {
                 // Utilisation de la fonction originale
                 const scrollDistance = originalUpdateCompetitionsDisplay(year, animate);
 
@@ -2242,11 +2331,11 @@
 
                         boxes.forEach((box, index) => {
                             const compKey = compKeysJSON[index];
-                            if (!compKey) return; 
+                            if (!compKey) return;
 
                             const compInfoCase = box.querySelector('#comp-info-case');
                             if (!compInfoCase) return;
-                            
+
                             // Trouver la clé canonique pour obtenir les points
                             const canonicalKey = jsonKeyToCanonicalKey[compKey];
                             const points = (canonicalKey && currentWeights[canonicalKey] !== undefined) ? currentWeights[canonicalKey] : 0;
@@ -2262,7 +2351,7 @@
                                 // Ne pas ajouter de <br>, il est implicite car #comp-info-case est en colonne
                                 compInfoCase.appendChild(pointsSpan);
                             }
-                            
+
                             pointsSpan.textContent = `(+${totalPoints} ${translations[currentLang].weighted_points_label})`;
                         });
                     }
@@ -2272,10 +2361,10 @@
 
             // G. MODIFICATION DE `setLanguage()`
             const originalSetLanguage = setLanguage;
-            setLanguage = function(lang) {
+            setLanguage = function (lang) {
                 originalSetLanguage(lang);
                 // Mettre à jour les labels spécifiques aux points
-                if (document.getElementById('ranking-mode-section')) { 
+                if (document.getElementById('ranking-mode-section')) {
                     updateRankingModeLabels();
                     updateWeightSectionLabels();
                     updateWeightInputs(); // Re-traduire les noms de compétitions
@@ -2293,8 +2382,8 @@
                 // Si l'animation est lancée, on relance avec la nouvelle langue
                 if (animationStarted) {
                     clearTimeout(timer);
-                    gsap.globalTimeline.pause(); 
-                    applyFilters(); 
+                    gsap.globalTimeline.pause();
+                    applyFilters();
                     createDOMElements(); // Recréer les éléments pour la traduction
                     startAnimation();
                 } else {
@@ -2322,4 +2411,5 @@
         });
     </script>
 </body>
+
 </html>
